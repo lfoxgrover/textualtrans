@@ -1,13 +1,42 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
-<div class="poem">
-    {{#each textitems}}
-     <a href="#" class="tooltip" title="{{entry}}"><span title="{{id}}">{{longwords}}</span></a>  
-    {{/each}}
+<div style="position: absolute; left: 10px; top: 10px;"> <a href="/group#form"><strong>DOWN</strong></a></div>
+<div style="position: absolute; right: 10px; top: 10px;"> <a href="/"><strong>BACK</strong></a></div>
+
+<div id="toggle-entry" class="poem">
+  
+    
+{{#each textitems}}
+     <span id="{{id}}">{{longwords}}</span><span id="{{id}}long" class="hiddentext">{{entry}}</span> 
+     <script>
+     $('#toggle-entry').on( 'mouseover', '#{{id}}', function() { $(this).addClass("hovertext"); 
+         
+     });
+     
+     $('#toggle-entry').on( 'mouseout', '#{{id}}', function() { $(this).removeClass("hovertext");
+         
+     });
+     
+     $('#toggle-entry').on( 'click', '#{{id}}', function() { $("#{{id}}long").toggle(); $(this).toggleClass("clickedtext");
+         
+     });
+     
+     
+      $('#toggle-entry').on( 'click', '#{{id}}', function() { 
+         
+     });
+     
+    
+     
+</script>
+
+   {{/each}}
 </div>
+
 <br>
 <br>
 <br>
+
 <div>
+<a name="form"></a>
   <form action="/create1">
     <textarea name="entry" rows="7" cols="30" maxlength="300"></textarea>
     <br><br>

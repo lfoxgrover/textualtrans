@@ -42,6 +42,8 @@ var Textitem = mongoose.model('Textitem', {
   entry: {type: String, required: true},
   length:{type: Number, required: false},
   longwords:{type: String, required: false},
+  created:{type: String, default: Date.now},
+  sentence_start:{type: Boolean}
 });
 
 
@@ -49,6 +51,8 @@ var Textitem2 = mongoose.model('Textitem2', {
   entry: {type: String, required: true},
   length:{type: Number, required: false},
   longwords:{type: String, required: false},
+  created:{type: String, default: Date.now},
+  sentence_start:{type: Boolean}
 });
 
 
@@ -82,7 +86,8 @@ var longwords = function(input){
     }
   }
  
-  var wordsofcertainlength = wordsofcertainlength.reverse().join(" ");
+ // removed var declaration  - CF April 19, 2015 - 5:31 PM
+  wordsofcertainlength = wordsofcertainlength.reverse().join(" ");
   
   return wordsofcertainlength.toString();
   
@@ -122,6 +127,16 @@ router.get('/', function(request, response, toss) {
  
 });
 
+
+// CLEAR THE SOLO PAGE
+router.get('/solo/start', function(request, response, toss) {
+  // When the server reqceives a request for "/solo/start", this code runs
+  Textitem2.remove(function(err) {
+    // When the remove is done, this code runs
+    if (err) return toss(err);
+    response.redirect('/solo');
+  });  
+});
 
 
 // SOLO PAGE
@@ -229,7 +244,7 @@ router.get('/create1', function(request, response, toss) {
    // Otherwise render a "thank you" page
     response.locals.textitem = textitem;
     
-    response.redirect('/group');
+    response.redirect('/group#form');
     // to send the user straight to the homepage after saving
   
 });
@@ -270,7 +285,7 @@ router.get('/create2', function(request, response, toss) {
    // Otherwise render a "thank you" page
     response.locals.textitem = textitem;
     
-    response.redirect('/solo');
+    response.redirect('/solo#form');
     // to send the user straight to the homepage after saving
   
 });
